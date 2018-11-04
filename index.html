@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>React [RU] Tutorial</title>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <style>
+            .red {
+                color:#ff0000;
+            }
+        </style>
+    </head>
+    <body>
+        <div id ="root"></div>
+        <script type = "text/babel">
+        const App = () => {
+             return (
+                 <React.Fragment>
+                    <News />
+                    <Comments />
+                 </React.Fragment>
+             )
+        }
+        const News = () => {
+            return <p>News</p>
+        }
+        const Comments = () => {
+            return <p>No comments</p>
+        }
+        class BigApp extends React.Component{
+            render(){
+                return(
+                <React.Fragment>
+                    <h1>Component BigApp</h1>
+                    <p className="red">Component p</p>
+                    <App />
+                    <News />
+                </React.Fragment>
+                )
+            }
+        }
+            ReactDOM.render(
+            <App/>,
+            document.getElementById("root")
+        );
+        </script>
+    </body>
+</html>
