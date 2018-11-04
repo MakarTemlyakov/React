@@ -107,19 +107,17 @@
           })
         }
         class TestInput extends React.Component{
-            state = {
-                myVal: '',
-            }
-            onChangeHand = (e) =>{
-                this.setState({myVal:e.currentTarget.value});
-            }
+           constructor(props) {
+               super(props);
+               this.input = React.createRef();
+           }
             onBtnClickHand = (e) =>{
-                alert(this.state.myVal);
+                alert(this.input.current.value);
             }
             render() {
                 return (
                     <React.Fragment>
-                        <input className='text-input' value='Enter value' onChange={this.onChangeHand} value={this.state.myVal}/>
+                        <input defaultValue='' ref={this.input} className='text-input' placeholder='Enter value'/>
                         <button onClick={this.onBtnClickHand}>Show Alert</button>
                     </React.Fragment>
                 )
