@@ -40,8 +40,23 @@
                  </React.Fragment>
              )
         }
-        const News = () => {
-            return <p>News</p>
+        class News extends React.Component {
+            render () {
+                const newstemp = this.props.data.map(function(item,index){
+                    return (
+                        <div key={index}>
+                            <p className="news__author">{item.author}:</p>
+                            <p className="news__text">{item.text}</p>
+                        </div>
+                    )
+                })
+                console.log(newstemp);
+                return (
+                    <div className="news">
+                        {newstemp}
+                    </div>
+                )
+            }
         }
         const Comments = () => {
             return <p>No comments</p>
