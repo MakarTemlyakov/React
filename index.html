@@ -43,6 +43,33 @@
             .test-input {
                margin: 0 5px 5px 0;
             }
+            .add {
+               margin: 0 5px 5px 0;
+               width: 210px;
+               border: 1px dashed rgba(0, 89, 181, 0.82);
+               padding: 5px;
+            }
+            .add__author, .add__text, .add__btn, .add__checkrule {
+               display: block;
+               margin: 0 0 5px 0;
+               padding: 5px;
+               width: 94%;
+               border: 1px solid rgba(0, 89, 181, 0.82);
+            }
+            .add__checkrule {
+               border: none;
+               font-size: 12px;
+            }
+            .add__btn {
+               box-sizing: content-box;
+               color: #FFF;
+               text-transform: uppercase;
+               background: #007DDC;
+            }
+            .add__btn:disabled {
+               background: #CCC;
+               color: #999;
+            }
         </style>
     </head>
     <body>
@@ -106,20 +133,44 @@
             bigText:PropTypes.string.isRequired,
           })
         }
-        class TestInput extends React.Component{
-           constructor(props) {
-               super(props);
-               this.input = React.createRef();
-           }
-            onBtnClickHand = (e) =>{
-                alert(this.input.current.value);
+        class Add extends React.Component{
+            state = {
+                name: '',
+                agree:false,
+                text: '',
+            }
+            validate = () => {
+                const { name, text, agree} = this.state;
+                if (name.trim() && text.trim() && agree) {
+                    return true;
+                }
+                return false;
+            }
+            handRuleBox = (e) => {
+                this.setState({agree:e.currentTarget.checked});
+            }
+            onBtnClickHand = (e) => {
+                e.preventDefault();
+                const {name, text} = this.state;    
+                alert(name + "\n" + text);
+            }
+            handChange = (e) => {
+                const {id, value } = e.currentTarget;
+                this.setState({ [id]: e.currentTarget.value});
             }
             render() {
+                const { name, text, agree } = this.state;
                 return (
-                    <React.Fragment>
-                        <input defaultValue='' ref={this.input} className='text-input' placeholder='Enter value'/>
-                        <button onClick={this.onBtnClickHand}>Show Alert</button>
-                    </React.Fragment>
+                    <form className='add'>
+                        <input id='name' type='text' className='add__author' placeholder='Your name' onChange={this.handChange} value={name} />
+                        <textarea id='text' className='add__text' placeholder="News text" onChange={this.handChange} value={text}></textarea>
+                        <label className='add__checkrule'>
+                            <input type='checkbox' onChange={this.handRuleBox}/>Im agree with rules
+                        </label>
+                        <button className='add__btn' onClick={this.onBtnClickHand} disabled={!this.validate()}>
+                            Show alert
+                        </button>
+                    </form> 
                 )
             }
         }
@@ -127,7 +178,7 @@
              return (
                  <React.Fragment>
                     <h3>News</h3>
-                    <TestInput />
+                    <Add />
                     <News data={myNews}/>
                  </React.Fragment>
              )
