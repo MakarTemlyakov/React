@@ -47,18 +47,24 @@
         }
         class News extends React.Component {
             render () {
-                const newstemp = this.props.data.map(function(item){
+                const { data } = this.props;
+                let newstemp;
+                if (data.length){
+                  newstemp = this.props.data.map(function(item){
                     return (
                         <div key={item.id}>
                             <p className="news__author">{item.author}:</p>
                             <p className="news__text">{item.text}</p>
                         </div>
                     )
-                })
-                console.log(newstemp);
+                  })
+                } else {
+                    newstemp = <p>No new news</p>
+                }
                 return (
                     <div className="news">
                         {newstemp}
+                        <strong>All news:{data.length}</strong>
                     </div>
                 )
             }
