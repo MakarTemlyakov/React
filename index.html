@@ -15,10 +15,27 @@
     <body>
         <div id ="root"></div>
         <script type = "text/babel">
+        const myNews = [
+          { 
+              author:"author_1",
+              text:"1"
+          },
+          { 
+              author:"author_2",
+              text:"2"
+          },
+          {    author:"author_3",
+              text:"3"
+          },
+          { 
+              author:"author_4",
+              text:"4"
+          }
+        ];
         const App = () => {
              return (
                  <React.Fragment>
-                    <News />
+                    <News data={myNews} />
                     <Comments />
                  </React.Fragment>
              )
