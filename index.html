@@ -13,6 +13,32 @@
             .none{
                 display: none;
             }
+            .none {
+                display: none;
+            }
+            body {
+                background: rgba(0, 102, 255, 0.38);
+                font-family: sans-serif;
+            }
+            p {
+                margin: 0 0 5px;
+            }
+            .article {
+                background: #FFF;
+                border: 1px solid rgba(0, 89, 181, 0.82);
+                width: 600px;
+                margin: 0 0 5px;
+                box-shadow: 2px 2px 5px -1px rgb(0, 81, 202);
+                padding: 3px 5px;
+            }
+            .news__author {
+               text-decoration: underline;
+               color: #007DDC;
+            }
+            .news__count {
+               margin: 10px 0 0 0;
+               display: block;
+            }
         </style>
     </head>
     <body>
@@ -40,53 +66,48 @@
               text:"4"
           }
         ];
+        class Article extends React.Component{
+            render() {
+                const { author, text } = this.props.data;
+                return (
+                    <div className="article">
+                        <p className="news__author">{author}:</p>
+                        <p className="news__text">{text}</p>
+                    </div>
+                )
+            }
+        }
         const App = () => {
              return (
                  <React.Fragment>
+                    <h3>News</h3>
                     <News data={myNews} />
-                    <Comments />
                  </React.Fragment>
              )
         }
         class News extends React.Component {
-            render () {
+            renderNews = () => {
                 const { data } = this.props;
-                let newstemp;
+                let newstemp = null;
                 if (data.length){
-                  newstemp = this.props.data.map(function(item){
-                    return (
-                        <div key={item.id}>
-                            <p className="news__author">{item.author}:</p>
-                            <p className="news__text">{item.text}</p>
-                        </div>
-                    )
+                  newstemp = data.map(function(item){
+                    return  <Article key={item.id} data={item}/>
                   })
                 } else {
                     newstemp = <p>No new news</p>
                 }
-                return (
-                    <div className="news">
-                        {newstemp}
-                        {
-                            data.length ? <strong>All news: {data.length}</strong> : null
-                        }
-                        </div>
-                )
+                return newstemp;
             }
-        }
-        const Comments = () => {
-            return <p>No comments</p>
-        }
-        class BigApp extends React.Component{
             render(){
-                return(
-                <React.Fragment>
-                    <h1>Component BigApp</h1>
-                    <p className="red">Component p</p>
-                    <App />
-                    <News />
-                </React.Fragment>
-                )
+                const { data } = this.props;
+             return (
+                <div className="news">
+                  {this.renderNews()}
+                  {
+                  data.length ? <strong className={'news__count'}>All news: {data.length}</strong> : null
+                  }
+                </div>
+               );
             }
         }
             ReactDOM.render(
