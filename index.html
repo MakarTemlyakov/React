@@ -156,16 +156,16 @@
             render(){
                 const { data } = this.props;
                 const { counter } = this.state;
-             return (
-                <div className="news">
-                  {this.renderNews()}
-                  {
-                  data.length ? <strong onClick={this.handCounter} className={'news__count'}>All news: {data.length}</strong> : null
-                  }
-                  <p>Click's for all time:{counter}</p>
-                </div>
-               );
-            }
+                return (
+                  <div className="news">
+                    {this.renderNews()}
+                    {
+                    data.length ? <strong onClick={this.handCounter} className={'news__count'}>All news: {data.length}</strong> : null
+                    }
+                    <p> Click's for all time:{counter}</p>
+                  </div>
+                );
+             }
         }
         News.propType = {
             data: PropTypes.isRequired,
