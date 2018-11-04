@@ -17,17 +17,22 @@
         <script type = "text/babel">
         const myNews = [
           { 
+              id:1,
               author:"author_1",
               text:"1"
           },
           { 
+              id:2,
               author:"author_2",
               text:"2"
           },
-          {    author:"author_3",
+          {   
+              id:3,
+              author:"author_3",
               text:"3"
           },
           { 
+              id:4,
               author:"author_4",
               text:"4"
           }
@@ -42,9 +47,9 @@
         }
         class News extends React.Component {
             render () {
-                const newstemp = this.props.data.map(function(item,index){
+                const newstemp = this.props.data.map(function(item){
                     return (
-                        <div key={index}>
+                        <div key={item.id}>
                             <p className="news__author">{item.author}:</p>
                             <p className="news__text">{item.text}</p>
                         </div>
