@@ -10,6 +10,9 @@
             .red {
                 color:#ff0000;
             }
+            .none{
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -64,8 +67,10 @@
                 return (
                     <div className="news">
                         {newstemp}
-                        <strong>All news:{data.length}</strong>
-                    </div>
+                        {
+                            data.length ? <strong>All news: {data.length}</strong> : null
+                        }
+                        </div>
                 )
             }
         }
