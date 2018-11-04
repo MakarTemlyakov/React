@@ -110,7 +110,7 @@
                 this.setState({ visible: true })
             }
             render() {
-                const { author, text,bigText } = this.props.data;
+                const { author, text, bigText } = this.props.data;
                 const { visible } = this.state;
                 return (
                     <div className="article">
@@ -128,6 +128,7 @@
         }
         Article.propTypes = {
             data:PropTypes.shape({
+            id:PropTypes.number.isRequired,
             author: PropTypes.string.isRequired,
             text: PropTypes.string.isRequired,
             bigText:PropTypes.string.isRequired,
@@ -138,9 +139,10 @@
                 name: '',
                 agree:false,
                 text: '',
+                bigText: '',
             }
             validate = () => {
-                const { name, text, agree} = this.state;
+                const { name, text, agree } = this.state;
                 if (name.trim() && text.trim() && agree) {
                     return true;
                 }
@@ -151,19 +153,25 @@
             }
             onBtnClickHand = (e) => {
                 e.preventDefault();
-                const {name, text} = this.state;    
-                alert(name + "\n" + text);
+                const {name, text, bigText} = this.state;    
+                this.props.onAddNews({
+                    id: +new Date(),
+                    author: name,
+                    bigText, 
+                    text,
+                })
             }
             handChange = (e) => {
                 const {id, value } = e.currentTarget;
                 this.setState({ [id]: e.currentTarget.value});
             }
             render() {
-                const { name, text, agree } = this.state;
+                const { name, text, agree, bigText} = this.state;
                 return (
                     <form className='add'>
                         <input id='name' type='text' className='add__author' placeholder='Your name' onChange={this.handChange} value={name} />
                         <textarea id='text' className='add__text' placeholder="News text" onChange={this.handChange} value={text}></textarea>
+                        <textarea id='bigText' onChange={this.handChange} className="add__text" placeholder="Text news more" value={bigText}></textarea>
                         <label className='add__checkrule'>
                             <input type='checkbox' onChange={this.handRuleBox}/>Im agree with rules
                         </label>
@@ -174,22 +182,29 @@
                 )
             }
         }
-        const App = () => {
-             return (
+        Add.propTypes ={
+            onAddNews: PropTypes.func.isRequired,
+        }
+        class App extends React.Component{
+            state = {
+                news: myNews,
+            }
+            handleAddNews = (data) => {
+              const nextNews = [data, ...this.state.news];
+              this.setState({news:nextNews});
+
+            }
+            render(){
+              return (
                  <React.Fragment>
                     <h3>News</h3>
-                    <Add />
-                    <News data={myNews}/>
+                    <Add onAddNews ={this.handleAddNews}/>
+                    <News data={this.state.news}/>
                  </React.Fragment>
-             )
+                )  
+            }
         }
         class News extends React.Component {
-            state = {
-                counter: 0,
-            }
-            handCounter = () => {
-                this.setState({counter:++this.state.counter});
-            }
             renderNews = () => {
                 const { data } = this.props;
                 let newstemp = null;
@@ -204,14 +219,12 @@
             }
             render(){
                 const { data } = this.props;
-                const { counter } = this.state;
                 return (
                   <div className="news">
                     {this.renderNews()}
                     {
                     data.length ? <strong onClick={this.handCounter} className={'news__count'}>All news: {data.length}</strong> : null
                     }
-                    <p> Click's for all time:{counter}</p>
                   </div>
                 );
              }
