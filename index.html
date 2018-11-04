@@ -49,31 +49,49 @@
           { 
               id:1,
               author:"author_1",
-              text:"1"
+              text:"1",
+              bigText:'wqeqweqweqew'
           },
           { 
               id:2,
               author:"author_2",
-              text:"2"
+              text:"2",
+              bigText:'qweqweqeqweqweqeqweqeqweqweqweqwewqeqweqwe'
           },
           {   
               id:3,
               author:"author_3",
-              text:"3"
+              text:"3",
+              bigText:'qwe'
           },
           { 
               id:4,
               author:"author_4",
-              text:"4"
+              text:"4",
+              bigText:'czxczxczxczxcxzcxzxczzxc'
           }
         ];
         class Article extends React.Component{
+            state = {
+                visible: false,
+            }
+            handReadMoreClck = (e) => {
+                e.preventDefault();
+                this.setState({ visible: true })
+            }
             render() {
-                const { author, text } = this.props.data;
+                const { author, text,bigText } = this.props.data;
+                const { visible } = this.state;
                 return (
                     <div className="article">
                         <p className="news__author">{author}:</p>
                         <p className="news__text">{text}</p>
+                        {
+                            !visible && <a href="#" className='news__readmore' onClick={this.handReadMoreClck}>More...</a>
+                        }
+                        {
+                            visible && <p className="news__big-text">{bigText}</p>
+                        }
                     </div>
                 )
             }
@@ -82,6 +100,7 @@
             data:PropTypes.shape({
             author: PropTypes.string.isRequired,
             text: PropTypes.string.isRequired,
+            bigText:PropTypes.string.isRequired,
           })
         }
         const App = () => {
