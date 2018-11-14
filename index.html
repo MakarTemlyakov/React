@@ -6,9 +6,69 @@
         <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
         <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
         <style>
             .red {
                 color:#ff0000;
+            }
+            .none{
+                display: none;
+            }
+            .none {
+                display: none;
+            }
+            body {
+                background: rgba(0, 102, 255, 0.38);
+                font-family: sans-serif;
+            }
+            p {
+                margin: 0 0 5px;
+            }
+            .article {
+                background: #FFF;
+                border: 1px solid rgba(0, 89, 181, 0.82);
+                width: 600px;
+                margin: 0 0 5px;
+                box-shadow: 2px 2px 5px -1px rgb(0, 81, 202);
+                padding: 3px 5px;
+            }
+            .news__author {
+               text-decoration: underline;
+               color: #007DDC;
+            }
+            .news__count {
+               margin: 10px 0 0 0;
+               display: block;
+            }
+            .test-input {
+               margin: 0 5px 5px 0;
+            }
+            .add {
+               margin: 0 5px 5px 0;
+               width: 210px;
+               border: 1px dashed rgba(0, 89, 181, 0.82);
+               padding: 5px;
+            }
+            .add__author, .add__text, .add__btn, .add__checkrule {
+               display: block;
+               margin: 0 0 5px 0;
+               padding: 5px;
+               width: 94%;
+               border: 1px solid rgba(0, 89, 181, 0.82);
+            }
+            .add__checkrule {
+               border: none;
+               font-size: 12px;
+            }
+            .add__btn {
+               box-sizing: content-box;
+               color: #FFF;
+               text-transform: uppercase;
+               background: #007DDC;
+            }
+            .add__btn:disabled {
+               background: #CCC;
+               color: #999;
             }
         </style>
     </head>
@@ -17,46 +77,160 @@
         <script type = "text/babel">
         const myNews = [
           { 
+              id:1,
               author:"author_1",
-              text:"1"
+              text:"1",
+              bigText:'wqeqweqweqew'
           },
           { 
+              id:2,
               author:"author_2",
-              text:"2"
+              text:"2",
+              bigText:'qweqweqeqweqweqeqweqeqweqweqweqwewqeqweqwe'
           },
-          {    author:"author_3",
-              text:"3"
+          {   
+              id:3,
+              author:"author_3",
+              text:"3",
+              bigText:'qwe'
           },
           { 
+              id:4,
               author:"author_4",
-              text:"4"
+              text:"4",
+              bigText:'czxczxczxczxcxzcxzxczzxc'
           }
         ];
-        const App = () => {
-             return (
-                 <React.Fragment>
-                    <News data={myNews} />
-                    <Comments />
-                 </React.Fragment>
-             )
-        }
-        const News = () => {
-            return <p>News</p>
-        }
-        const Comments = () => {
-            return <p>No comments</p>
-        }
-        class BigApp extends React.Component{
-            render(){
-                return(
-                <React.Fragment>
-                    <h1>Component BigApp</h1>
-                    <p className="red">Component p</p>
-                    <App />
-                    <News />
-                </React.Fragment>
+        class Article extends React.Component{
+            state = {
+                visible: false,
+            }
+            handReadMoreClck = (e) => {
+                e.preventDefault();
+                this.setState({ visible: true })
+            }
+            render() {
+                const { author, text, bigText } = this.props.data;
+                const { visible } = this.state;
+                return (
+                    <div className="article">
+                        <p className="news__author">{author}:</p>
+                        <p className="news__text">{text}</p>
+                        {
+                            !visible && <a href="#" className='news__readmore' onClick={this.handReadMoreClck}>More...</a>
+                        }
+                        {
+                            visible && <p className="news__big-text">{bigText}</p>
+                        }
+                    </div>
                 )
             }
+        }
+        Article.propTypes = {
+            data:PropTypes.shape({
+            id:PropTypes.number.isRequired,
+            author: PropTypes.string.isRequired,
+            text: PropTypes.string.isRequired,
+            bigText:PropTypes.string.isRequired,
+          })
+        }
+        class Add extends React.Component{
+            state = {
+                name: '',
+                agree:false,
+                text: '',
+                bigText: '',
+            }
+            validate = () => {
+                const { name, text, agree } = this.state;
+                if (name.trim() && text.trim() && agree) {
+                    return true;
+                }
+                return false;
+            }
+            handRuleBox = (e) => {
+                this.setState({agree:e.currentTarget.checked});
+            }
+            onBtnClickHand = (e) => {
+                e.preventDefault();
+                const {name, text, bigText} = this.state;    
+                this.props.onAddNews({
+                    id: +new Date(),
+                    author: name,
+                    bigText, 
+                    text,
+                })
+            }
+            handChange = (e) => {
+                const {id, value } = e.currentTarget;
+                this.setState({ [id]: e.currentTarget.value});
+            }
+            render() {
+                const { name, text, agree, bigText} = this.state;
+                return (
+                    <form className='add'>
+                        <input id='name' type='text' className='add__author' placeholder='Your name' onChange={this.handChange} value={name} />
+                        <textarea id='text' className='add__text' placeholder="News text" onChange={this.handChange} value={text}></textarea>
+                        <textarea id='bigText' onChange={this.handChange} className="add__text" placeholder="Text news more" value={bigText}></textarea>
+                        <label className='add__checkrule'>
+                            <input type='checkbox' onChange={this.handRuleBox}/>Im agree with rules
+                        </label>
+                        <button className='add__btn' onClick={this.onBtnClickHand} disabled={!this.validate()}>
+                            Show alert
+                        </button>
+                    </form> 
+                )
+            }
+        }
+        Add.propTypes ={
+            onAddNews: PropTypes.func.isRequired,
+        }
+        class App extends React.Component{
+            state = {
+                news: myNews,
+            }
+            handleAddNews = (data) => {
+              const nextNews = [data, ...this.state.news];
+              this.setState({news:nextNews});
+
+            }
+            render(){
+              return (
+                 <React.Fragment>
+                    <h3>News</h3>
+                    <Add onAddNews ={this.handleAddNews}/>
+                    <News data={this.state.news}/>
+                 </React.Fragment>
+                )  
+            }
+        }
+        class News extends React.Component {
+            renderNews = () => {
+                const { data } = this.props;
+                let newstemp = null;
+                if (data.length){
+                  newstemp = data.map(function(item){
+                    return  <Article key={item.id} data={item}/>
+                  })
+                } else {
+                    newstemp = <p>No new news</p>
+                }
+                return newstemp;
+            }
+            render(){
+                const { data } = this.props;
+                return (
+                  <div className="news">
+                    {this.renderNews()}
+                    {
+                    data.length ? <strong onClick={this.handCounter} className={'news__count'}>All news: {data.length}</strong> : null
+                    }
+                  </div>
+                );
+             }
+        }
+        News.propType = {
+            data: PropTypes.isRequired,
         }
             ReactDOM.render(
             <App/>,

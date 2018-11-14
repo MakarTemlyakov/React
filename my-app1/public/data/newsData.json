@@ -1,0 +1,27 @@
+[
+    { 
+        "id":1,
+        "author":"Author_1",
+        "text":"This is news 1",
+        "bigText":"News text 1"
+    },
+    { 
+        "id":2,
+        "author":"Author_2",
+        "text":"This is news 2",
+        "bigText":"News text 2"
+    },
+    {   
+        "id":3,
+        "author":"Author_3",
+        "text":"This is news 3",
+        "bigText":"News text 3"
+    },
+    { 
+        "id":4,
+        "author":"Author_4",
+        "text":"This is news 4",
+        "bigText":"News text 4"
+    }
+  ]
+  

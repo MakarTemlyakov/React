@@ -1,2 +1,4 @@
 # React
-React course
+React course 
+index.html - Файл без ипользования npm.
+my-app1 - Папка содержит отдельные модули, связанные между собой с использованием npm.
