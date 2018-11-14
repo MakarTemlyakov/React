@@ -41,8 +41,7 @@ class AddComment extends React.Component{
 
 class Article extends React.Component{
     constructor(props){
-        super(props);
-        
+        super(props);        
         this.state = {
             visible: false,
             comments:['Стандартный коммент'],
