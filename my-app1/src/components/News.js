@@ -23,11 +23,7 @@ class News extends React.Component {
     return (
       <div className="news">
         {this.renderNews()}
-        {data.length ? (
-          <strong className={'news__count'}>
-            All news today: {data.length}
-          </strong>
-        ) : null}
+        {data.length ? (<strong className={'news__count'}>All news today: {data.length}</strong>) : null}
       </div>
     )
   }
