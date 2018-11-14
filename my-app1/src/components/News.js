@@ -19,15 +19,17 @@ class News extends React.Component {
   render() {
     const { data } = this.props
 
-    return (
-      <div className="news">
-        {this.renderNews()}
-        {data.length ? (<strong className={'news__count'}>All news today: {data.length}</strong>) : null}
-      </div>
-    )
-  }
-}
-
+  return (
+         <div className='news'>
+           {this.renderNews()}
+           {
+             data.length ? <strong className={'news__count'}>Всего новостей: {data.length}</strong> : null
+           }
+          </div>
+       );
+     }
+   }
+          
 News.propTypes = {
   data: PropTypes.array.isRequired,
 }
