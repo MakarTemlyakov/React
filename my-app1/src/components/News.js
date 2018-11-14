@@ -14,7 +14,6 @@ class News extends React.Component {
     } else {
       newsTemplate = <p>You don't have new news</p>
     }
-
     return newsTemplate
   }
   render() {
