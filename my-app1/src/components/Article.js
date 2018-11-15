@@ -6,7 +6,7 @@ class ShowComments extends React.Component{
         return (
             <div>
                 <p><strong>Комментарии:</strong><br/></p>
-                {this.props.comments.map((comment,index)=>{
+                {this.props.comments.map((comment)=>{
                     return <p>>><em>{comment}</em></p>
                 })}
             </div>
