@@ -26,11 +26,19 @@ class Add extends React.Component{
             bigText, 
             text,
         })
+        this.setState({
+            name: "",
+            text:"",
+            bigText: "",
+        })
+        
     }
+
     handChange = (e) => {
         const {id, value } = e.currentTarget;
         this.setState({ [id]: value});
     }
+
     render() {
         const { name, text, bigText} = this.state;
         return (
@@ -41,8 +49,8 @@ class Add extends React.Component{
                 <label className='add__checkrule'>
                     <input type='checkbox' onChange={this.handRuleBox}/>Im agree with rules
                 </label>
-                <button className='add__btn' onClick={this.onBtnClickHand} disabled={!this.validate()}>
-                    Show alert
+                <button className='add__btn' onClick={this.onBtnClickHand} disabled={!this.validate()} >
+                    Отправить данные
                 </button>
             </form> 
         )
