@@ -22,6 +22,13 @@ class AddComment extends React.Component{
         this.handChange = this.handChange.bind(this);
         this.handAddComment = this.handAddComment.bind(this);
     }
+    validate =() => {
+        const {newComment} = this.state;
+        if(newComment.trim()) {
+            return true;
+        }
+        return false;
+    }
     handChange(e){
         this.setState({newComment:e.target.value})
     }
@@ -33,7 +40,7 @@ class AddComment extends React.Component{
         return (
             <div>
                 <input type="text" value={this.state.newComment} onChange={this.handChange} />
-                <button onClick={this.handAddComment}>Add comment</button>
+                <button onClick={this.handAddComment} disabled={!this.validate()}>Add comment</button>
             </div>
         )
     }
